@@ -1,0 +1,26 @@
+version: '2'
+
+services:
+  app:
+    image: 'stc_app'
+    build:
+      context: .
+      dockerfile: Dockerfile - App
+    container_name: app
+    depends_on:
+      - db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/stc-db
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=P@ssw0rd
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=validate
+    ports:
+    - 8080:8080
+
+  db:
+    container_name: db
+    build:
+      context: .
+      dockerfile: Dockerfile - DB
+    ports:
+      - 5432:5432
